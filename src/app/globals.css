@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-obsidian text-headline antialiased;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-color: #0b0f14;
+    background-image:
+      linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .glass-header {
+    @apply border-b border-white/10 bg-surface/45 backdrop-blur-[12px];
+  }
+
+  .glass-panel {
+    @apply border border-white/10 bg-surface-elevated/70 backdrop-blur-[12px];
+  }
+
+  .text-gradient-display {
+    background: linear-gradient(180deg, #f8fafc 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .surface-card {
+    @apply rounded-2xl border border-white/10 bg-surface-elevated/90 shadow-lg shadow-black/20;
+  }
+
+  .input-dark {
+    @apply rounded-lg border border-white/10 bg-surface/80 px-3 py-2 text-sm text-headline placeholder:text-muted outline-none transition focus:border-accent/50 focus:ring-1 focus:ring-accent/30;
+  }
+
+  /* LTR fill on hover — wrap label text in <span> */
+  .btn-accent-fill {
+    @apply relative inline-flex items-center justify-center overflow-hidden rounded-xl border border-accent/45 px-5 py-2.5 text-sm font-semibold text-accent transition-colors duration-300;
+  }
+
+  .btn-accent-fill::before {
+    content: "";
+    @apply absolute inset-0 origin-left scale-x-0 bg-accent transition-transform duration-300 ease-out;
+  }
+
+  .btn-accent-fill:hover::before {
+    @apply scale-x-100;
+  }
+
+  .btn-accent-fill:hover {
+    @apply border-accent;
+  }
+
+  .btn-accent-fill span {
+    @apply relative z-10 transition-colors duration-300;
+  }
+
+  .btn-accent-fill:hover span {
+    @apply text-white;
+  }
+
+  .glow-accent-soft {
+    box-shadow: 0 0 24px rgba(59, 130, 246, 0.25);
+  }
+}
