@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     }
 
     const total = normalizedItems.reduce((sum, item) => sum + item.subtotal, 0);
-    const amount = (total / 100).toFixed(2);
+    const amount = total.toFixed(2);
     const origin = process.env.NEXT_PUBLIC_SITE_URL || req.headers.get("origin");
     const merchantId = process.env.PAYHERE_MERCHANT_ID;
     const merchantSecret = process.env.PAYHERE_MERCHANT_SECRET;
