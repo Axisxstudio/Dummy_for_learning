@@ -3,6 +3,13 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import { verifyPayHereMd5Sig } from "@/lib/payhere";
 import { notifyAdminOnWhatsApp } from "@/lib/twilio-whatsapp";
 
+export async function GET() {
+  return NextResponse.json({
+    ok: true,
+    message: "PayHere notify endpoint is live. Use POST for payment callbacks."
+  });
+}
+
 export async function POST(req: Request) {
   try {
     const form = await req.formData();
