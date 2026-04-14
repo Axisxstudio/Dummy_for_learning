@@ -8,10 +8,16 @@ import { useEffect } from "react";
 export function PayHereScript() {
   useEffect(() => {
     if (document.querySelector(`script[data-payhere-sdk="true"]`)) return;
-    const sources = [
-      "https://www.payhere.lk/lib/payhere.js",
-      "https://sandbox.payhere.lk/lib/payhere.js"
-    ];
+    const sandbox = process.env.NEXT_PUBLIC_PAYHERE_SANDBOX === "true";
+    const sources = sandbox
+      ? [
+          "https://sandbox.payhere.lk/lib/payhere.js",
+          "https://www.payhere.lk/lib/payhere.js"
+        ]
+      : [
+          "https://www.payhere.lk/lib/payhere.js",
+          "https://sandbox.payhere.lk/lib/payhere.js"
+        ];
 
     const tryLoad = (index: number) => {
       if (index >= sources.length) return;
