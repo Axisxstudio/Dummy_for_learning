@@ -16,6 +16,14 @@ type CheckoutBody = {
   };
 };
 
+function trimEnv(value: string | undefined | null) {
+  return (value || "").trim();
+}
+
+function normalizeBaseUrl(value: string) {
+  return value.trim().replace(/\/+$/, "");
+}
+
 export async function POST(req: Request) {
   try {
     const body = (await req.json()) as CheckoutBody;
@@ -63,9 +71,11 @@ export async function POST(req: Request) {
 
     const total = normalizedItems.reduce((sum, item) => sum + item.subtotal, 0);
     const amount = total.toFixed(2);
-    const origin = process.env.NEXT_PUBLIC_SITE_URL || req.headers.get("origin");
-    const merchantId = process.env.PAYHERE_MERCHANT_ID;
-    const merchantSecret = process.env.PAYHERE_MERCHANT_SECRET;
+    const origin = normalizeBaseUrl(
+      process.env.NEXT_PUBLIC_SITE_URL || req.headers.get("origin") || ""
+    );
+    const merchantId = trimEnv(process.env.PAYHERE_MERCHANT_ID);
+    const merchantSecret = trimEnv(process.env.PAYHERE_MERCHANT_SECRET);
     const sandbox = process.env.PAYHERE_SANDBOX === "true";
 
     if (!origin || !merchantId || !merchantSecret) {
@@ -108,6 +118,14 @@ export async function POST(req: Request) {
       amount,
       currency: "LKR",
       merchantSecret
+    });
+
+    console.info("PayHere checkout init", {
+      orderRef,
+      sandbox,
+      amount,
+      origin,
+      merchantIdPrefix: merchantId.slice(0, 3)
     });
 
     return NextResponse.json({
